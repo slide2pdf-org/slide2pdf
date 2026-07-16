@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide2PDF - Client-Side Document Tools</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand">
+                <i class="fa-solid fa-file-pdf brand-icon"></i>
+                <span class="brand-name">SLIDE<span class="accent-text">2</span>PDF</span>
+            </div>
+            <div class="badge-pill">
+                <i class="fa-solid fa-shield-halved"></i> Zero Server Submissions
+            </div>
+        </div>
+    </header>
+
+    <main class="app-main">
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs" aria-label="Tool selection">
+            <button class="tab-btn active" data-tab="img-to-pdf">
+                <i class="fa-regular fa-images"></i> Image to PDF
+            </button>
+            <button class="tab-btn" data-tab="pdf-to-jpg">
+                <i class="fa-regular fa-file-image"></i> PDF to JPG
+            </button>
+            <button class="tab-btn" data-tab="pdf-to-png">
+                <i class="fa-solid fa-file-image"></i> PDF to PNG
+            </button>
+        </nav>
+
+        <!-- Tool Containers -->
+        <div class="tool-view active" id="img-to-pdf">
+            <div class="tool-card">
+                <h2>Convert Images to PDF</h2>
+                <p class="tool-description">Combine multiple images into a single high-quality PDF presentation. Drag and drop your images below to start.</p>
+                
+                <div class="dropzone" id="dropzone-images">
+                    <input type="file" id="input-images" accept="image/*" multiple class="file-input">
+                    <i class="fa-solid fa-cloud-arrow-up dropzone-icon"></i>
+                    <p class="dropzone-text">Drag & drop your images here or <span class="highlight">Browse</span></p>
+                    <p class="dropzone-subtext">Supports PNG, JPG, JPEG, WEBP</p>
+                </div>
+
+                <div class="preview-container" id="images-preview-list" style="display: none;">
+                    <h3>Uploaded Images (<span id="image-count">0</span>)</h3>
+                    <div class="preview-grid" id="image-thumbnails"></div>
+                </div>
+
+                <div class="control-panel">
+                    <div class="control-group">
+                        <label for="pdf-filename">Filename</label>
+                        <input type="text" id="pdf-filename" value="Slide2PDF_Document" placeholder="Enter PDF filename">
+                    </div>
+                    <div class="control-group">
+                        <div class="slider-label">
+                            <label for="pdf-quality">Image Compression Quality</label>
+                            <span id="quality-val">85%</span>
+                        </div>
+                        <input type="range" id="pdf-quality" min="10" max="100" value="85" class="range-slider">
+                    </div>
+                </div>
+
+                <button id="btn-generate-pdf" class="btn-primary" disabled>
+                    <i class="fa-solid fa-file-export"></i> Generate PDF
+                </button>
+            </div>
+        </div>
+
+        <div class="tool-view" id="pdf-to-jpg">
+            <div class="tool-card">
+                <h2>Convert PDF to JPG Pages</h2>
+                <p class="tool-description">Extract every page of your PDF into separate high-resolution JPG images entirely in your browser.</p>
+                
+                <div class="dropzone" id="dropzone-pdf-jpg">
+                    <input type="file" id="input-pdf-jpg" accept="application/pdf" class="file-input">
+                    <i class="fa-solid fa-file-pdf dropzone-icon"></i>
+                    <p class="dropzone-text">Drag & drop your PDF here or <span class="highlight">Browse</span></p>
+                    <p class="dropzone-subtext">Max size supported relies on device memory</p>
+                </div>
+
+                <div class="pdf-info-box" id="pdf-jpg-info" style="display: none;">
+                    <i class="fa-solid fa-file-contract"></i>
+                    <span class="pdf-name" id="pdf-jpg-name">document.pdf</span>
+                    <span class="pdf-pages" id="pdf-jpg-pages">0 pages</span>
+                </div>
+
+                <button id="btn-convert-jpg" class="btn-primary" disabled>
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Convert Pages to JPG
+                </button>
+            </div>
+        </div>
+
+        <div class="tool-view" id="pdf-to-png">
+            <div class="tool-card">
+                <h2>Convert PDF to PNG Pages</h2>
+                <p class="tool-description">Export PDF pages as lossless PNG files. Ideal for text clarity, digital presentations, and slides.</p>
+                
+                <div class="dropzone" id="dropzone-pdf-png">
+                    <input type="file" id="input-pdf-png" accept="application/pdf" class="file-input">
+                    <i class="fa-solid fa-file-pdf dropzone-icon"></i>
+                    <p class="dropzone-text">Drag & drop your PDF here or <span class="highlight">Browse</span></p>
+                    <p class="dropzone-subtext">Processed locally with vector precision</p>
+                </div>
+
+                <div class="pdf-info-box" id="pdf-png-info" style="display: none;">
+                    <i class="fa-solid fa-file-contract"></i>
+                    <span class="pdf-name" id="pdf-png-name">document.pdf</span>
+                    <span class="pdf-pages" id="pdf-png-pages">0 pages</span>
+                </div>
+
+                <button id="btn-convert-png" class="btn-primary" disabled>
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Convert Pages to PNG
+                </button>
+            </div>
+        </div>
+
+        <!-- Shared Results Gallery -->
+        <section class="results-container" id="results-section" style="display: none;">
+            <div class="results-header">
+                <h2>Generated Files</h2>
+                <button id="btn-clear-results" class="btn-secondary">Clear Results</button>
+            </div>
+            <div class="results-gallery" id="results-gallery">
+                <!-- Converted thumbnails with individual download actions go here -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>© 2026 Slide2PDF. No Cloud Uploads. Built secure, private, and client-side.</p>
+    </footer>
+
+    <!-- CDN Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="script.js"></script>
+</body>
+      </html>
