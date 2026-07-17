@@ -155,5 +155,37 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script src="script.js"></script>
+    <!-- Floating Feedback Button -->
+<button id="feedback-trigger-btn" class="feedback-btn" aria-label="Open Feedback Form">
+  <span class="feedback-icon">💬</span> Feedback
+</button>
+
+<!-- Feedback Modal Overlay -->
+<div id="feedback-modal-overlay" class="modal-overlay">
+  <!-- Glassmorphism Modal Content -->
+  <div class="glass-modal">
+    <!-- Close Button -->
+    <button id="feedback-close-btn" class="close-btn" aria-label="Close Feedback Modal">&times;</button>
+    
+    <div class="modal-header">
+      <h2>Feedback & Report Issue</h2>
+      <p>Your inputs help us improve.</p>
+    </div>
+
+    <!-- Google Form Placeholder Iframe Container -->
+    <div class="iframe-container">
+      <!-- Replace the src attribute below with your Google Form embed link -->
+      <iframe 
+        src="about:blank" 
+        width="100%" 
+        height="100%" 
+        frameborder="0" 
+        marginheight="0" 
+        marginwidth="0">
+        Loading…
+      </iframe>
+    </div>
+  </div>
+</div>
 </body>
       </html>
