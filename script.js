@@ -391,3 +391,44 @@ btnClearResults.addEventListener('click', () => {
     resultsGallery.innerHTML = '';
     resultsSection.style.display = 'none';
 });
+document.addEventListener('DOMContentLoaded', () => {
+  const triggerBtn = document.getElementById('feedback-trigger-btn');
+  const overlay = document.getElementById('feedback-modal-overlay');
+  const closeBtn = document.getElementById('feedback-close-btn');
+
+  // Function to open the modal
+  const openModal = () => {
+    overlay.style.display = 'flex';
+    // Small delay ensures transition triggers smoothly after display: flex is set
+    setTimeout(() => {
+      overlay.classList.add('active');
+    }, 10);
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    overlay.classList.remove('active');
+    // Wait for the transition duration before setting display to none
+    setTimeout(() => {
+      overlay.style.display = 'none';
+    }, 300);
+  };
+
+  // Event Listeners
+  triggerBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+
+  // Close modal when clicking outside the glass content card
+  overlay.addEventListener('click', (event) => {
+    if (event.target === overlay) {
+      closeModal();
+    }
+  });
+
+  // Close modal with Escape key
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && overlay.classList.contains('active')) {
+      closeModal();
+    }
+  });
+});
