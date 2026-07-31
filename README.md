@@ -12,5 +12,4 @@ An open-source, 100% client-side, and privacy-first online tool to convert image
 - 🎯 **No Registration:** Completely free to use with zero limits.
 
 ## 📜 License
-Distributed under the MIT License.
-
+Distributed under the GNU General Public License v3.0 (GPL-3.0).
