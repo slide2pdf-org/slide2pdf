@@ -479,7 +479,7 @@ async function applyWatermark(doc) {
       const pdfHeight = doc.internal.pageSize.getHeight();
 
       // Position: Bottom-Center with a 10-unit padding from the bottom margin
-      const xPos = (pdfWidth - targetWidth) / 2;
+      const xPos = pdfWidth - targetWidth - 10;
       const yPos = pdfHeight - targetHeight - 10;
 
       // Add watermark image (formats automatically detected or specified as PNG)
