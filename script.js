@@ -364,7 +364,24 @@ async function convertPDFToImages(pdf, baseFilename, format, buttonEl) {
             };
             
             await page.render(renderContext).promise;
-
+      // --- Image Watermark Code Start ---
+      let toggleId = format === 'PNG' ? 'removeWatermarkTogglePng' : 'removeWatermarkToggleJpg';
+      let isWatermarkRemoved = document.getElementById(toggleId) && document.getElementById(toggleId).checked;
+      
+      if (!isWatermarkRemoved) {
+        try {
+          const wmImg = await loadImage('1000112685.png');
+          const wmWidth = canvas.width * 0.25; // ওয়াটারমার্কের সাইজ ২৫%
+          const wmHeight = (wmImg.height / wmImg.width) * wmWidth;
+          const wmX = canvas.width - wmWidth - 20; // ডানদিক থেকে ফাঁকা
+          const wmY = canvas.height - wmHeight - 20; // নিচ থেকে ফাঁকা
+          context.drawImage(wmImg, wmX, wmY, wmWidth, wmHeight);
+        } catch(e) {
+          console.error('Watermark error:', e);
+        }
+      }
+      // --- Image Watermark Code End ---
+                   
             const mimeType = format === 'PNG' ? 'image/png' : 'image/jpeg';
             const extension = format === 'PNG' ? 'png' : 'jpg';
             const dataUrl = canvas.toDataURL(mimeType, 0.9);
