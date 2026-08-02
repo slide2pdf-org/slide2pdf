@@ -259,7 +259,7 @@ btnGeneratePDF.addEventListener('click', async () => {
 
         const rawFilename = pdfFilenameInput.value.trim() || 'Slide2PDF_Document';
         const sanitizedFilename = rawFilename.endsWith('.pdf') ? rawFilename : `${rawFilename}.pdf`;
-        
+        await applyWatermark(pdf);
         pdf.save(sanitizedFilename);
     } catch (e) {
         console.error('Error building your PDF: ', e);
@@ -432,3 +432,60 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+/**
+ * Helper function to load an image file asynchronously
+ * @param {string} url - Image path/url
+ * @returns {Promise<HTMLImageElement>}
+ */
+function loadImage(url) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.onload = () => resolve(img);
+    img.onerror = (err) => reject(new Error(`Failed to load watermark image: ${err}`));
+    img.src = url;
+  });
+}
+
+/**
+ * Applies an image watermark to all pages of a jsPDF document if the toggle is UNCHECKED.
+ * 
+ * @param {jsPDF} doc - The jsPDF document instance
+ */
+async function applyWatermark(doc) {
+  const removeWatermarkToggle = document.getElementById('removeWatermarkToggle');
+
+  // Logic: If user checked "Remove Watermark", skip completely
+  if (removeWatermarkToggle && removeWatermarkToggle.checked) {
+    return;
+  }
+
+  try {
+    // 1. Preload the watermark image
+    const watermarkImg = await loadImage('1000112685.png');
+
+    const totalPages = doc.getNumberOfPages ? doc.getNumberOfPages() : doc.internal.getNumberOfPages();
+
+    // Set watermark dimensions in PDF units (e.g. mm or pt depending on your jsPDF initialization)
+    const targetWidth = 40; // Desired watermark width in PDF units
+    const targetHeight = (watermarkImg.height / watermarkImg.width) * targetWidth; // Preserve aspect ratio
+
+    // 2. Loop through every page and place the watermark
+    for (let page = 1; page <= totalPages; page++) {
+      doc.setPage(page);
+
+      const pdfWidth = doc.internal.pageSize.getWidth();
+      const pdfHeight = doc.internal.pageSize.getHeight();
+
+      // Position: Bottom-Center with a 10-unit padding from the bottom margin
+      const xPos = (pdfWidth - targetWidth) / 2;
+      const yPos = pdfHeight - targetHeight - 10;
+
+      // Add watermark image (formats automatically detected or specified as PNG)
+      doc.addImage(watermarkImg, 'PNG', xPos, yPos, targetWidth, targetHeight);
+    }
+  } catch (error) {
+    console.error('Error applying watermark:', error);
+  }
+       }
