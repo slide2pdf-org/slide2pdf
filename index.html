@@ -82,7 +82,15 @@
                         <input type="range" id="pdf-quality" min="10" max="100" value="85" class="range-slider">
                     </div>
                 </div>
-
+<div class="watermark-container">
+  <label class="toggle-switch" for="removeWatermarkToggle">
+    <input type="checkbox" id="removeWatermarkToggle" aria-label="Remove Watermark">
+    <span class="slider"></span>
+  </label>
+  <label for="removeWatermarkToggle" class="toggle-label">
+    Remove Watermark <span class="badge-free">Free</span>
+  </label>
+</div>
                 <button id="btn-generate-pdf" class="btn-primary" disabled>
                     <i class="fa-solid fa-file-export"></i> Generate PDF
                 </button>
