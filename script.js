@@ -5,7 +5,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs
 // State Variables
 let selectedImages = [];
 let loadedPDFToJPG = null;
-let loadedPDFToPNG = null;
 
 // DOM Elements
 const tabButtons = document.querySelectorAll('.tab-btn');
@@ -29,14 +28,6 @@ const pdfJPGInfo = document.getElementById('pdf-jpg-info');
 const pdfJPGName = document.getElementById('pdf-jpg-name');
 const pdfJPGPages = document.getElementById('pdf-jpg-pages');
 const btnConvertJPG = document.getElementById('btn-convert-jpg');
-
-// PDF-to-PNG DOM Elements
-const dropzonePDFPNG = document.getElementById('dropzone-pdf-png');
-const inputPDFPNG = document.getElementById('input-pdf-png');
-const pdfPNGInfo = document.getElementById('pdf-png-info');
-const pdfPNGName = document.getElementById('pdf-png-name');
-const pdfPNGPages = document.getElementById('pdf-png-pages');
-const btnConvertPNG = document.getElementById('btn-convert-png');
 
 // Shared Results DOM Elements
 const resultsSection = document.getElementById('results-section');
@@ -284,19 +275,6 @@ inputPDFJPG.addEventListener('change', (e) => {
     if (e.target.files.length > 0) handlePDFSelection(e.target.files[0], 'JPG');
 });
 
-/* ==========================================================================
-   Tool 3: PDF to PNG
-   ========================================================================== */
-initDragFeedback(dropzonePDFPNG);
-
-dropzonePDFPNG.addEventListener('drop', (e) => {
-    const files = Array.from(e.dataTransfer.files).filter(file => file.type === 'application/pdf');
-    if (files.length > 0) handlePDFSelection(files[0], 'PNG');
-});
-
-inputPDFPNG.addEventListener('change', (e) => {
-    if (e.target.files.length > 0) handlePDFSelection(e.target.files[0], 'PNG');
-});
 
 /* ==========================================================================
    Core PDF Parser & Extractor
@@ -331,12 +309,6 @@ async function handlePDFSelection(file, format) {
 btnConvertJPG.addEventListener('click', async () => {
     if (!loadedPDFToJPG) return;
     await convertPDFToImages(loadedPDFToJPG.pdf, loadedPDFToJPG.name, 'JPG', btnConvertJPG);
-});
-
-// Convert PDF to PNG Execution
-btnConvertPNG.addEventListener('click', async () => {
-    if (!loadedPDFToPNG) return;
-    await convertPDFToImages(loadedPDFToPNG.pdf, loadedPDFToPNG.name, 'PNG', btnConvertPNG);
 });
 
 async function convertPDFToImages(pdf, baseFilename, format, buttonEl) {
