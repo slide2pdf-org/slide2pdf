@@ -60,9 +60,6 @@
             <button class="tab-btn" data-tab="pdf-to-jpg">
                 <i class="fa-regular fa-file-image"></i> PDF to JPG
             </button>
-            <button class="tab-btn" data-tab="pdf-to-png">
-                <i class="fa-solid fa-file-image"></i> PDF to PNG
-            </button>
         </nav>
 
         <!-- Tool Containers -->
@@ -141,40 +138,6 @@
                 
                 <button id="btn-convert-jpg" class="btn-primary" disabled>
                     <i class="fa-solid fa-wand-magic-sparkles"></i> Convert Pages to JPG
-                </button>
-            </div>
-        </div>
-
-        <div class="tool-view" id="pdf-to-png">
-            <div class="tool-card">
-                <h2>Convert PDF to PNG Pages</h2>
-                <p class="tool-description">Export PDF pages as lossless PNG files. Ideal for text clarity, digital presentations, and slides.</p>
-                
-                <div class="dropzone" id="dropzone-pdf-png">
-                    <input type="file" id="input-pdf-png" accept="application/pdf" class="file-input">
-                    <i class="fa-solid fa-file-pdf dropzone-icon"></i>
-                    <p class="dropzone-text">Drag & drop your PDF here or <span class="highlight">Browse</span></p>
-                    <p class="dropzone-subtext">Processed locally with vector precision</p>
-                </div>
-
-                <div class="pdf-info-box" id="pdf-png-info" style="display: none;">
-                    <i class="fa-solid fa-file-contract"></i>
-                    <span class="pdf-name" id="pdf-png-name">document.pdf</span>
-                    <span class="pdf-pages" id="pdf-png-pages">0 pages</span>
-                </div>
-
-                <div class="watermark-container">
-  <label class="toggle-switch" for="removeWatermarkTogglePng">
-    <input type="checkbox" id="removeWatermarkTogglePng" aria-label="Remove Watermark">
-    <span class="slider"></span>
-  </label>
-  <label for="removeWatermarkTogglePng" class="toggle-label">
-    Remove Watermark <span class="badge-free">Free</span>
-  </label>
-                </div>
-                
-                <button id="btn-convert-png" class="btn-primary" disabled>
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> Convert Pages to PNG
                 </button>
             </div>
         </div>
